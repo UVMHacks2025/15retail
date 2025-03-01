@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS marketplace;
 USE marketplace;
 
 -- Users
-CREATE TABLE users (
+CREATE TABLE users IF NOT EXISTS users (
                        user_ID INT PRIMARY KEY,
                        email VARCHAR(255) UNIQUE NOT NULL,
                        password_hash VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE users (
 );
 
 -- Student Users
-CREATE TABLE students (
+CREATE TABLE students IF NOT EXISTS students(
                           student_id INT PRIMARY KEY,
                           name VARCHAR(100) NOT NULL,
                           school_year ENUM('freshman', 'sophomore', 'junior', 'senior', 'graduate'),

@@ -60,41 +60,7 @@
     </div>
 </footer>
 
-<script src ="../Objects.js">
-    function createUser() {
-        let email = document.getElementById('email').value;
-        let password = document.getElementById('password').value;
-        let ampersandIndex = email.indexOf("@");
-        let name = email.substring(0, ampersandIndex);
-        let location = "temp";
-        let $user_type = 'student';
 
-        user = new Account(name, email, password, location);
-
-        var mysql = require('mysql');
-
-        var con = mysql.createConnection({
-        host: "mysql:host=webdb.uvm.edu;dbname=HCUSSATT_hackathon",
-        user: "hcussatt_admin",
-        password: "}Yun)NRNolzlf57xu*d8",
-        database: "HCUSSATT_hackathon"
-        });
-
-        con.connect(function(err) {
-        if (err) throw err;
-        var table = "CREATE TABLE users IF NOT EXISTS users (user_ID INT PRIMARY KEY,email VARCHAR(255) UNIQUE NOT NULL,password_hash VARCHAR(255) NOT NULL,user_type ENUM('student', 'organization') NOT NULL,created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
-        con.query(table, function(err, result) {
-            if (err) throw err;
-            console.log("Table created");
-        });
-        con.query("INSERT INTO users(user_ID, name, email, password_hash, user_type) VALUES ('$user', '$name', '$email', '$password', '$user_type')", function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-        });
-        });
-
-    }
-</script>
 <script src="../public/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="../public/assets/js/bs-init.js"></script>
 <script src="../public/assets/js/bold-and-dark.js"></script>

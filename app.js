@@ -33,6 +33,10 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

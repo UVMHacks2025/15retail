@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Product - moving site</title>
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.reflowhq.com/v2/toolkit.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md sticky-top py-3 navbar-dark" id="mainNav">
+    <div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><span>moving site<a href="index.html"></a></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html"></a></li>
+                <li class="nav-item"><a class="nav-link" href="donations.html">Donations</a></li>
+                <li class="nav-item"><a class="nav-link" href="trades.html">Trades</a></li>
+                <li class="nav-item"><a class="nav-link" href="buy.html">Buy</a></li>
+                <li class="nav-item"><a class="nav-link" href="sell.html">Sell</a></li>
+            </ul><a class="btn btn-primary shadow" role="button" href="signup.html">Sign up<a href="signup.html"></a></a><a class="btn btn-primary shadow" role="button" href="login.html" style="color: var(--bs-light);background: var(--bs-secondary);margin: 3px;padding: -0.4px 32px;">Log In<a href="login.html"></a></a>
+        </div>
+    </div>
+</nav>
+<section class="py-5">
+    <div class="container py-5">
+        <div data-reflow-type="product" data-bss-dynamic-product="" data-bss-dynamic-product-param="product" data-reflow-shoppingcart-url="shopping-cart.html"></div>
+    </div>
+</section>
+<footer class="bg-dark">
+    <div class="container py-4 py-lg-5">
+        <hr>
+        <div class="text-muted d-flex justify-content-between align-items-center pt-3">
+            <p class="mb-0">WE HELP U SELL THINGS</p>
+        </div>
+    </div>
+</footer>
+<script src="../public/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.reflowhq.com/v2/toolkit.min.js"></script>
+<script src="../public/assets/js/bs-init.js"></script>
+<script src="../public/assets/js/bold-and-dark.js"></script>
+</body>
+
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+        }
+        #productList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+
+
+<h1>List Your Product</h1>
+<form>
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" name="description" required><br><br>
+
+    <label for="category">Category:</label><br>
+    <input type="text" id="category" name="category" required><br><br>
+
+    <label for="price">Price:</label><br>
+    <input type="number" id="price" name="price" required><br><br>
+
+    <label for="image1">Image 1:</label><br>
+    <input type="file" id="image1" name="image1" accept="image/*"><br><br>
+
+    <label for="image2">Image 2:</label><br>
+    <input type="file" id="image2" name="image2" accept="image/*"><br><br>
+
+    <label for="image3">Image 3:</label><br>
+    <input type="file" id="image3" name="image3" accept="image/*"><br><br>
+
+    <button type="button" id="submitProduct">Submit Product</button>
+</form>
+
+<div id="productList"></div>
+
+<script>
+    document.getElementById("submitProduct").addEventListener("click", function() {
+        let images = [];
+        let imageInputs = document.querySelectorAll("input[type='file']");
+        imageInputs.forEach(input => {
+            if (input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    images.push(e.target.result);
+                    if (images.length === 3) saveProduct(images);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
+    function saveProduct(images) {
+        let description = document.getElementById("description").value;
+        let category = document.getElementById("category").value;
+        let price = document.getElementById("price").value;
+
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        let product = { images, description, category, price };
+        products.push(product);
+        localStorage.setItem("products", JSON.stringify(products));
+
+        alert("Product listed successfully!");
+    }
+
+    // Function to load products on the buy page
+    window.onload = function() {
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        let productContainer = document.getElementById("productList");
+
+        products.forEach((product, index) => {
+            let productCard = document.createElement("div");
+            productCard.innerHTML = `
+                    <div class='product-card'>
+                        <a href='product-detail.html?index=${index}'>
+                            <img src='${product.images[0]}' class='product-image'>
+                        </a>
+                        <h4>${product.description}</h4>
+                        <p>Category: ${product.category}</p>
+                        <p>Price: $${product.price}</p>
+                    </div>
+                `;
+            productContainer.appendChild(productCard);
+        });
+    };
+</script>
+
+</body>
+</html>

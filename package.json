@@ -1,0 +1,23 @@
+{
+  "name": "15retail",
+  "version": "1.0.0",
+  "description": "At the beginning and the end of semesters, students hurry to pack up their stuff and move out. Many times, stuff is left behind in hopes that suitcases will close. To help reduce waste and ease these transitional periods, create a platform that will identify and sort these items for students and those who have just graduated to help furnish their new homes!",
+  "main": "Objects.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UVMHacks2025/15retail.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UVMHacks2025/15retail/issues"
+  },
+  "homepage": "https://github.com/UVMHacks2025/15retail#readme",
+  "dependencies": {
+    "express": "file:express"
+  }
+}

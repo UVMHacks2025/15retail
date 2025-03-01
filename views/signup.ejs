@@ -41,9 +41,9 @@
                             </svg></div>
                         <form method="post" class="mb-0 pb-0">
                             <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
-                            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password" style="margin: 6px 0px 22px;"></div>
-                            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Repeat Password" style="padding: 12px;margin: 6px 0px 22px;"></div>
-                            <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Sign Up</button></div>
+                            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password" style="margin: 6px 0px 22px;"></div><input class="form-control" type="password" name="password" placeholder="Repeat Password" style="padding: 12px;margin: -57px 0px 22px;">
+                            <div class="mb-3"></div>
+                            <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit" onclick="createUser()">Sign Up</button></div>
                         </form>
                     </div>
                 </div>
@@ -59,6 +59,37 @@
         </div>
     </div>
 </footer>
+
+<script src ="../Objects.js">
+    function createUser() {
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let ampersandIndex = email.indexOf("@");
+        let name = email.substring(0, ampersandIndex);
+        let location = "temp";
+        let $user_type = "Student"
+
+        user = new Account(name, email, password, location);
+
+        var mysql = require('mysql');
+
+        var con = mysql.createConnection({
+        host: "mysql:host=webdb.uvm.edu;dbname=HCUSSATT_hackathon",
+        user: "hcussatt_admin",
+        password: "}Yun)NRNolzlf57xu*d8",
+        database: "HCUSSATT_hackathon"
+        });
+
+        con.connect(function(err) {
+        if (err) throw err;
+        con.query("INSERT INTO Users(user_ID, name, email, password_hash, user_type) VALUES ('$user', '$name', '$email', '$password', '$user_type')", function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+        });
+        });
+
+    }
+</script>
 <script src="../public/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="../public/assets/js/bs-init.js"></script>
 <script src="../public/assets/js/bold-and-dark.js"></script>

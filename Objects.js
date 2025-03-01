@@ -83,13 +83,21 @@ class Account {
         this.listings.push(listing);
     }
 
+    removeListing(listing) {
+        for (let i = 0; i < this.listings.length; i++) {
+            if (this.listings[i].getListingId() == listing.getListingId()) {
+                listings.slice(i, i);
+            }
+        }
+    }
+
     getListings() {
         return this.listings;
     }
 
-    getListing(listingId) {
+    getListing(listing) {
         for (let i = 0; i < listings.length; i++) {
-            if (listings[i].getListingId() == listingId) {
+            if (listings[i].getListingId() == listing.getListingId()) {
                 return listings[i];
             }
         }
@@ -143,16 +151,15 @@ class Listing {
     #name;
     // float
     #price;
-    // list
-    img_ids;
     // str
     #description;
+    // list
+    images;
 
-    constructor(userId, name, price, img_ids, description) {
+    constructor(userId, name, price, description) {
         this.#userId = userId;
         this.#name = name;
         this.#price = price;
-        this.img_ids = img_ids;
         this.#description = description;
         this.generateListingId();
     }
@@ -190,23 +197,33 @@ class Listing {
         this.#price = price;
     }
 
-    getImg_ids() {
-        return this.img_ids;
+    addImages(img) {
+        images.push(img);
     }
 
-    addImg(img) {
-        img_ids += img;
+    getImageIds() {
+        imageIds;
+        for (let i = 0; i < this.images.length; i++) {
+            imageIds.push(image.getImageId())
+        }
+        return imageIds;
     }
 
-    getImg(img) {
-        for (let i = 0; i < img_ids.length; i++) {
-            if (img_ids[i] == img) {
-                return img;
+    removeImage(img) {
+        for (let i = 0; i < this.images.length; i++) {
+            if (this.images[i].getImageId() == img.getImageId()) {
+                images.slice(i, i);
             }
         }
     }
 
-    getDes
+    getDescription() {
+        return this.#description;
+    }
+
+    setDescription(description) {
+        this.#description = description;
+    }
 
 
 }
@@ -270,4 +287,35 @@ class Rental extends Listing {
 
 
 
+}
+
+class Image {
+    imageId;
+    imageExtension;
+
+    constructor(name) {
+        this.generateImageId(name);
+        this.findImageExtension(name);
+    }
+
+    generateImageId(name) {
+        for (let i = 0; i < name.length; i++) {
+            imageId += name.charCodeAt(i).toString();
+        }
+        imageId = imageId + Date.now().toString()
+        imageId = parseInt(imageId);
+    }
+
+    findImageExtension(name) {
+        periodIndex = name.indexOf(".");
+        this.imageExtension = name.substring(periodIndex);
+    }
+
+    getImageId() {
+        return this.imageId;
+    }
+
+    getImageExtension() {
+        return this.imageExtension;
+    }
 }

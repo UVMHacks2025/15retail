@@ -235,8 +235,8 @@ class Rental extends Listing {
     endDate;
     duration;
 
-    constructor(userId, name, price, img_ids, description, safteyDeposit, paySchedule, startDate, endDate) {
-        super(userId, name, price, img_ids, description);
+    constructor(userId, name, price, description, safteyDeposit, paySchedule, startDate, endDate) {
+        super(userId, name, price, description);
         this.safteyDeposit = safteyDeposit;
         this.paySchedule = paySchedule;
         this.startDate = startDate;

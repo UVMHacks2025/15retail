@@ -45,3 +45,110 @@
 </body>
 
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+        }
+        #productList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+
+
+<h1>List Your Product</h1>
+<form>
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" name="description" required><br><br>
+
+    <label for="category">Category:</label><br>
+    <input type="text" id="category" name="category" required><br><br>
+
+    <label for="price">Price:</label><br>
+    <input type="number" id="price" name="price" required><br><br>
+
+    <label for="image1">Image 1:</label><br>
+    <input type="file" id="image1" name="image1" accept="image/*"><br><br>
+
+    <label for="image2">Image 2:</label><br>
+    <input type="file" id="image2" name="image2" accept="image/*"><br><br>
+
+    <label for="image3">Image 3:</label><br>
+    <input type="file" id="image3" name="image3" accept="image/*"><br><br>
+
+    <button type="button" id="submitProduct">Submit Product</button>
+</form>
+
+<div id="productList"></div>
+
+<script>
+    document.getElementById("submitProduct").addEventListener("click", function() {
+        let images = [];
+        let imageInputs = document.querySelectorAll("input[type='file']");
+        imageInputs.forEach(input => {
+            if (input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    images.push(e.target.result);
+                    if (images.length === 3) saveProduct(images);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
+    function saveProduct(images) {
+        let description = document.getElementById("description").value;
+        let category = document.getElementById("category").value;
+        let price = document.getElementById("price").value;
+
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        let product = { images, description, category, price };
+        products.push(product);
+        localStorage.setItem("products", JSON.stringify(products));
+
+        alert("Product listed successfully!");
+    }
+
+    // Function to load products on the buy page
+    window.onload = function() {
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        let productContainer = document.getElementById("productList");
+
+        products.forEach((product, index) => {
+            let productCard = document.createElement("div");
+            productCard.innerHTML = `
+                    <div class='product-card'>
+                        <a href='product-detail.html?index=${index}'>
+                            <img src='${product.images[0]}' class='product-image'>
+                        </a>
+                        <h4>${product.description}</h4>
+                        <p>Category: ${product.category}</p>
+                        <p>Price: $${product.price}</p>
+                    </div>
+                `;
+            productContainer.appendChild(productCard);
+        });
+    };
+</script>
+
+</body>
+</html>
